@@ -12,11 +12,19 @@ public class Library {
     }
 
     public void addBook(Book book) {
-        books.add(book);
+        this.books.add(book);
     }
 
     public void removeBook(Book book) {
         this.books.remove(book);
+    }
+
+    public void addPerson(Person person) {
+        this.persons.add(person);
+    }
+
+    public void removePerson(Person person) {
+        this.persons.remove(person);
     }
 
     public List<Person> getAllPersons() {
