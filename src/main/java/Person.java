@@ -12,6 +12,7 @@ public class Person {
     private LocalDate borrowed;
     private LocalDate returned;
     private Integer credits;
+    private static Integer MINIMUM_RENTAL_CREDIT = 5;
 
     public String getName() {
         return name;
@@ -76,7 +77,7 @@ public class Person {
         loan = setLoanifthisBookisinLoanlist(book, loan);
 
         if (loan == null) {
-            if (credits >= 5) {
+            if (credits >= MINIMUM_RENTAL_CREDIT) {
                 this.loansActually.add(new Loan(book, LocalDate.parse(borrowed), null));
 
             } else {
@@ -89,20 +90,19 @@ public class Person {
 
     public void returns(Book book, String returned) {
         //is the book in the loanlist?
-        Loan loan = null;
-        loan = setLoanifthisBookisinLoanlist(book, loan);
+
+        Loan loan = getLoanForBook(book);
 
         if (loan != null) {
-
-            if (credits >= 5) {
+            this.returned = LocalDate.parse(returned);
+            Integer rentalDays = Math.toIntExact(getDifferenceDays(loan.getBorrowed(), this.returned));
+            if (credits >= rentalDays * book.getRentalFee()) {
+                // if (credits >= MINIMUM_RENTAL_CREDIT) {
                 this.loansActually.remove(loan);
-                this.returned = LocalDate.parse(returned);
 
                 //copy the returned loan to a history list
                 loan.setReturned(this.returned);
                 this.loansHistory.add(loan);
-
-                Integer rentalDays = Math.toIntExact(getDifferenceDays(loan.getBorrowed(), this.returned));
 
                 System.out.println("returning Book: " + book.getTitle() + " --> rental Days: " + rentalDays);
                 this.credits -= (rentalDays * book.getRentalFee());
@@ -114,13 +114,14 @@ public class Person {
         }
     }
 
-    private Loan setLoanifthisBookisinLoanlist(Book book, Loan loan) {
-        for (int i = 0; i < loansActually.size(); i++) {
-            if (loansActually.get(i).getBook().equals(book)) {
-                loan = loansActually.get(i);
+    public Loan getLoanForBook(Book book) {
+        for (Loan currentLoan : loansActually) {
+            if (currentLoan.getBook().equals(book)) {
+                return currentLoan;
             }
         }
-        return loan;
+
+        return null;
     }
 
     public void addCredits(Integer addCredits) {
