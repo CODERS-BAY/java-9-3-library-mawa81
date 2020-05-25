@@ -3,8 +3,24 @@ import java.util.List;
 
 public class Library {
 
-    public List<Person> persons;
-    public List<Book> books;
+    private List<Person> persons;
+    private List<Book> books;
+
+    public List<Person> getPersons() {
+        return persons;
+    }
+
+    public void setPersons(List<Person> persons) {
+        this.persons = persons;
+    }
+
+    public List<Book> getBooks() {
+        return books;
+    }
+
+    public void setBooks(List<Book> books) {
+        this.books = books;
+    }
 
     public Library() {
         this.persons = new ArrayList<>();
@@ -43,4 +59,29 @@ public class Library {
         this.books = books;
     }
 
+    @Override
+    public String toString() {
+        return "Library{" +
+                "persons=" + persons +
+                ", books=" + books +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Library library = (Library) o;
+
+        if (persons != null ? !persons.equals(library.persons) : library.persons != null) return false;
+        return books != null ? books.equals(library.books) : library.books == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = persons != null ? persons.hashCode() : 0;
+        result = 31 * result + (books != null ? books.hashCode() : 0);
+        return result;
+    }
 }

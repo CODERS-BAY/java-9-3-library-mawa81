@@ -1,12 +1,10 @@
-import java.util.Objects;
-
 public class Book {
     private String title;
     private String author;
     private String language;
     private String genre;
     private Integer pages;
-    public Integer rentalFee;
+    private Integer rentalFee;
 
     public Book(String title, String author, String language, String genre, Integer pages, Integer rentalFee) {
         this.title = title;
@@ -74,31 +72,40 @@ public class Book {
     }
 
     @Override
+    public String toString() {
+        return "Book{" +
+                "title='" + title + '\'' +
+                ", author='" + author + '\'' +
+                ", language='" + language + '\'' +
+                ", genre='" + genre + '\'' +
+                ", pages=" + pages +
+                ", rentalFee=" + rentalFee +
+                '}';
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
+
         Book book = (Book) o;
-        return Objects.equals(title, book.title) &&
-                Objects.equals(author, book.author) &&
-                Objects.equals(language, book.language) &&
-                Objects.equals(genre, book.genre) &&
-                Objects.equals(pages, book.pages) &&
-                Objects.equals(rentalFee, book.rentalFee);
+
+        if (title != null ? !title.equals(book.title) : book.title != null) return false;
+        if (author != null ? !author.equals(book.author) : book.author != null) return false;
+        if (language != null ? !language.equals(book.language) : book.language != null) return false;
+        if (genre != null ? !genre.equals(book.genre) : book.genre != null) return false;
+        if (pages != null ? !pages.equals(book.pages) : book.pages != null) return false;
+        return rentalFee != null ? rentalFee.equals(book.rentalFee) : book.rentalFee == null;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(title, author, language, genre, pages, rentalFee);
-    }
-
-    @Override
-    public String toString() {
-        return "Book{" +
-                "title='" + getTitle() + '\'' +
-                ", author='" + getAuthor() + '\'' +
-                ", language='" + getLanguage() + '\'' +
-                ", genre='" + getGenre() + '\'' +
-                ", pages=" + getPages() +
-                '}';
+        int result = title != null ? title.hashCode() : 0;
+        result = 31 * result + (author != null ? author.hashCode() : 0);
+        result = 31 * result + (language != null ? language.hashCode() : 0);
+        result = 31 * result + (genre != null ? genre.hashCode() : 0);
+        result = 31 * result + (pages != null ? pages.hashCode() : 0);
+        result = 31 * result + (rentalFee != null ? rentalFee.hashCode() : 0);
+        return result;
     }
 }

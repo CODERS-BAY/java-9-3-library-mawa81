@@ -1,18 +1,65 @@
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import static java.time.temporal.ChronoUnit.DAYS;
 
 public class Person {
 
-    public String name;
-    public List<Loan> loansActually;
-    public List<Loan> loansHistory;
-    public LocalDate borrowed;
-    public LocalDate returned;
-    public Integer credits;
+    private String name;
+    private List<Loan> loansActually;
+    private List<Loan> loansHistory;
+    private LocalDate borrowed;
+    private LocalDate returned;
+    private Integer credits;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public List<Loan> getLoansActually() {
+        return loansActually;
+    }
+
+    public void setLoansActually(List<Loan> loansActually) {
+        this.loansActually = loansActually;
+    }
+
+    public List<Loan> getLoansHistory() {
+        return loansHistory;
+    }
+
+    public void setLoansHistory(List<Loan> loansHistory) {
+        this.loansHistory = loansHistory;
+    }
+
+    public LocalDate getBorrowed() {
+        return borrowed;
+    }
+
+    public void setBorrowed(LocalDate borrowed) {
+        this.borrowed = borrowed;
+    }
+
+    public LocalDate getReturned() {
+        return returned;
+    }
+
+    public void setReturned(LocalDate returned) {
+        this.returned = returned;
+    }
+
+    public Integer getCredits() {
+        return credits;
+    }
+
+    public void setCredits(Integer credits) {
+        this.credits = credits;
+    }
 
     public Person(String name) {
         this.name = name;
@@ -58,7 +105,7 @@ public class Person {
                 Integer rentalDays = Math.toIntExact(getDifferenceDays(loan.getBorrowed(), this.returned));
 
                 System.out.println("returning Book: " + book.getTitle() + " --> rental Days: " + rentalDays);
-                this.credits -= (rentalDays * book.rentalFee);
+                this.credits -= (rentalDays * book.getRentalFee());
             } else {
                 System.out.println("Returning \"" + book.getTitle() + "\" is not possible! You have to top up your credits!");
             }
@@ -87,24 +134,42 @@ public class Person {
     }
 
     @Override
+    public String toString() {
+        return "Person{" +
+                "name='" + name + '\'' +
+                ", loansActually=" + loansActually +
+                ", loansHistory=" + loansHistory +
+                ", borrowed=" + borrowed +
+                ", returned=" + returned +
+                ", credits=" + credits +
+                '}';
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
+
         Person person = (Person) o;
-        return Objects.equals(loansActually, person.loansActually);
+
+        if (name != null ? !name.equals(person.name) : person.name != null) return false;
+        if (loansActually != null ? !loansActually.equals(person.loansActually) : person.loansActually != null)
+            return false;
+        if (loansHistory != null ? !loansHistory.equals(person.loansHistory) : person.loansHistory != null)
+            return false;
+        if (borrowed != null ? !borrowed.equals(person.borrowed) : person.borrowed != null) return false;
+        if (returned != null ? !returned.equals(person.returned) : person.returned != null) return false;
+        return credits != null ? credits.equals(person.credits) : person.credits == null;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(loansActually);
-    }
-
-    @Override
-    public String toString() {
-        return "Person{" +
-                "name='" + name + '\'' +
-                ", loans=" + loansActually +
-                ", credits=" + credits +
-                '}';
+        int result = name != null ? name.hashCode() : 0;
+        result = 31 * result + (loansActually != null ? loansActually.hashCode() : 0);
+        result = 31 * result + (loansHistory != null ? loansHistory.hashCode() : 0);
+        result = 31 * result + (borrowed != null ? borrowed.hashCode() : 0);
+        result = 31 * result + (returned != null ? returned.hashCode() : 0);
+        result = 31 * result + (credits != null ? credits.hashCode() : 0);
+        return result;
     }
 }

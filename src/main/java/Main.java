@@ -38,13 +38,13 @@ public class Main {
         person1.returns(book3, "2020-04-08");
 
 
-        System.out.println("Actual loans of " + person1.name + ": " + person1.loansActually);
+        System.out.println("Actual loans of " + person1.getName() + ": " + person1.getLoansActually());
         System.out.println();
-        System.out.println("History of loans of " + person1.name + ": " + person1.loansHistory);
+        System.out.println("History of loans of " + person1.getName() + ": " + person1.getLoansHistory());
         System.out.println();
-        System.out.println("Actual loans of " + person3.name + ": " + person3.loansActually);
+        System.out.println("Actual loans of " + person3.getName() + ": " + person3.getLoansActually());
         System.out.println();
-        System.out.println("History of loans of " + person3.name + ": " + person3.loansHistory);
+        System.out.println("History of loans of " + person3.getName() + ": " + person3.getLoansHistory());
 
 
         System.out.println("List of all books available in the library: \n" + library.getAllBooks());
