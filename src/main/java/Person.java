@@ -74,7 +74,7 @@ public class Person {
     public void rents(Book book, String borrowed) {
         //is the book in the loanlist?
         Loan loan = null;
-        loan = setLoanifthisBookisinLoanlist(book, loan);
+        loan = getLoanForBook(book);
 
         if (loan == null) {
             if (credits >= MINIMUM_RENTAL_CREDIT) {
@@ -90,14 +90,14 @@ public class Person {
 
     public void returns(Book book, String returned) {
         //is the book in the loanlist?
-
-        Loan loan = getLoanForBook(book);
+        Loan loan = null;
+        loan = getLoanForBook(book);
 
         if (loan != null) {
             this.returned = LocalDate.parse(returned);
             Integer rentalDays = Math.toIntExact(getDifferenceDays(loan.getBorrowed(), this.returned));
+            System.out.println(rentalDays);
             if (credits >= rentalDays * book.getRentalFee()) {
-                // if (credits >= MINIMUM_RENTAL_CREDIT) {
                 this.loansActually.remove(loan);
 
                 //copy the returned loan to a history list
@@ -120,7 +120,6 @@ public class Person {
                 return currentLoan;
             }
         }
-
         return null;
     }
 

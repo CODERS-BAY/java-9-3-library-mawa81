@@ -24,18 +24,24 @@ public class Main {
         library.addPerson(person4);
         library.addPerson(person5);
 
-        person1.addCredits(100);
+        person1.addCredits(500);
         person1.rents(book2, "2020-03-06");
         person1.rents(book1, "2020-03-07");
         person1.rents(book3, "2020-03-07");
         person1.rents(book4, "2020-03-07");
-
+        System.out.println(person1.getCredits());
         person1.returns(book1, "2020-03-14");
+        System.out.println(person1.getCredits());
         person1.returns(book2, "2020-04-08");
-        person1.returns(book2, "2020-04-08");
+        System.out.println(person1.getCredits());
         person1.returns(book3, "2020-04-08");
+        System.out.println(person1.getCredits());
+        person1.returns(book4, "2020-04-08");
+        System.out.println(person1.getCredits());
         person1.addCredits(1000);
+        System.out.println(person1.getCredits());
         person1.returns(book3, "2020-04-08");
+        System.out.println(person1.getCredits());
 
 
         System.out.println("Actual loans of " + person1.getName() + ": " + person1.getLoansActually());
